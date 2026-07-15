@@ -37,7 +37,13 @@ app.listen(PORT, () => {
 //post
 app.post('/biodata', async (req, res) => {
     const { id, nama, nim, kelas } = req.body; // Sesuaikan dengan kolom tabel Anda
-    
+    try {
+        const query = 'INSERT INTO biodata (id, nama, nim, kelas) VALUES ($1, $2, $3, $4) RETURNING *';
+        const values = [id, nama, nim, kelas];
+        const result = await pool.query(query, values);
+        
+        
+});
 //put
 
 //delete
