@@ -14,6 +14,7 @@ const pool = new Pool({
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Method GET untuk mengambil semua data dari tabel biodata
 app.get('/biodata', async (req, res) => {
@@ -36,12 +37,11 @@ app.listen(PORT, () => {
 
 //post
 app.post('/biodata', async (req, res) => {
-    const { nama, nim, kelas } = req.body;
+    const { id, nama, nim, kelas } = req.body;
 
     try {
-        const query = `INSERT INTO biodata (nama, nim, kelas) VALUES ($1, $2, $3)RETURNING *;`;
-        const result = await pool.query(query, [nama, nim,kelas
-        ]);
+        const query = `INSERT INTO biodata (id, nama, nim, kelas) VALUES ($1, $2, $3, $4)RETURNING *;`;
+        const result = await pool.query(query, [id, nama, nim, kelas]);
 
         res.status(201).json({
             message: 'Data berhasil ditambahkan',
