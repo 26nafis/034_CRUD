@@ -36,23 +36,23 @@ app.listen(PORT, () => {
 
 //post
 app.post('/biodata', async (req, res) => {
-    const { id, nama, nim, kelas } = req.body; // Sesuaikan dengan kolom tabel Anda
+    const { nama, nim, kelas } = req.body;
+
     try {
-        const query = 'INSERT INTO biodata (id, nama, nim, kelas) VALUES ($1, $2, $3, $4) RETURNING *';
-        const values = [id, nama, nim, kelas];
-        const result = await pool.query(query, values);
-        
+        const query = `INSERT INTO biodata (nama, nim, kelas) VALUES ($1, $2, $3)RETURNING *;`;
+        const result = await pool.query(query, [nama, nim,kelas
+        ]);
+
         res.status(201).json({
             message: 'Data berhasil ditambahkan',
             data: result.rows[0]
         });
+
     } catch (err) {
         console.error(err);
+
         res.status(500).json({
-            message: 'Gagal menambahkan data'
+            error: err.message
         });
     }
 });
-//put
-
-//delete
