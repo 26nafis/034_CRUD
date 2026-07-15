@@ -42,7 +42,16 @@ app.post('/biodata', async (req, res) => {
         const values = [id, nama, nim, kelas];
         const result = await pool.query(query, values);
         
-        
+        res.status(201).json({
+            message: 'Data berhasil ditambahkan',
+            data: result.rows[0]
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Gagal menambahkan data'
+        });
+    }
 });
 //put
 
